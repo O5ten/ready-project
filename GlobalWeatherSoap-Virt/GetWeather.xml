@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:mockOperation name="GetWeather" id="e7e30bc5-7942-4e95-a0b9-4756f2aea67e" interface="GlobalWeatherSoap" operation="GetWeather" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="e7e30bc5-7942-4e95-a0b9-4756f2aea67efileName">GetWeather</con:setting></con:settings><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchConfig/><con:response name="Response 1" id="cc568065-e2af-4ff2-a3c5-d1ecc8e32378" httpResponseStatus="200" encoding="UTF-8" dataSource=""><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetWeatherResponse>
+         <!--Optional:-->
+         <web:GetWeatherResult>?</web:GetWeatherResult>
+      </web:GetWeatherResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GetWeather"/></con:response></con:mockOperation>

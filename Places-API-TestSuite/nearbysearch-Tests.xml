@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="nearbysearch Tests" searchProperties="true" id="67a37888-943c-491a-abdd-d1ca06b4ff72" xmlns:con="http://eviware.com/soapui/config">
+            <con:description>Performs a nearby search for a specified location and transfers the reference to the first
+                found location as input to get its details. Validates the detail response coordinates.
+
+                https://developers.google.com/places/documentation/search#PlaceSearchRequests
+            </con:description>
+            <con:settings><con:setting id="67a37888-943c-491a-abdd-d1ca06b4ff72fileName">nearbysearch-Tests</con:setting></con:settings>
+            <con:testStep type="restrequest" name="GET - Nearby Search Sample" id="dc3b9812-39e7-42f0-84fe-38c5ab69c9dd">
+                <con:settings/>
+                <con:config service="Places API" resourcePath="/maps/api/place/nearbysearch/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Nearby Search Sample" mediaType="application/xml" id="3ad79352-4463-46b9-a882-5f5138b9f5f7">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>https://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Check for [Darling Harbour]" id="4f1d2d62-3558-471a-8927-df453950761d">
+                            <con:configuration>
+                                <path>declare namespace
+                                    ns1='https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+                                    exists(//ns1:name[text()='Pancakes on the Rocks'])
+                                </path>
+                                <content>true</content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="location" value="-33.8670522,151.1957362"/>
+                            <con:entry key="name" value="harbour"/>
+                            <con:entry key="radius" value="500"/>
+                            <con:entry key="format" value="json"/>
+                            <con:entry key="types" value="food"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:testStep type="transfer" name="Reference Transfer" id="1290047c-1054-4661-92d3-69c5e1f80b1b">
+                <con:settings/>
+                <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+                        <con:name>Reference</con:name>
+                        <con:sourceType>ResponseAsXml</con:sourceType>
+                        <con:sourceStep>GET - Nearby Search Sample</con:sourceStep>
+                        <con:sourcePath>declare namespace
+                            ns1='https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+                            //ns1:Response[1]/ns1:results[1]/ns1:e[1]/ns1:reference[1]
+                        </con:sourcePath>
+                        <con:targetType>reference</con:targetType>
+                        <con:targetStep>GET - Details</con:targetStep>
+                    <con:upgraded>true</con:upgraded></con:transfers>
+                </con:config>
+            </con:testStep>
+            <con:testStep type="restrequest" name="GET - Details" id="f85f4757-09ce-4657-8b12-d000ae3da05c">
+                <con:settings/>
+                <con:config service="Places API" resourcePath="/maps/api/place/details/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Details" mediaType="application/xml" id="bf0c5705-644a-4457-802f-f7abb8baddab">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>https://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Match content of [lat] in search response" id="5d512760-23db-4a9d-afcc-bc2f744dec79">
+                            <con:configuration>
+                                <path>declare namespace ns1='https://maps.googleapis.com/maps/api/place/details/json';
+                                    //ns1:Response[1]/ns1:result[1]/ns1:geometry[1]/ns1:location[1]/ns1:lat[1]/text()
+                                </path>
+                                <content>
+                                    ${GET - Nearby Search Sample#ResponseAsXml#declare namespace ns1='https://maps.googleapis.com/maps/api/place/nearbysearch/json'; //ns1:Response[1]/ns1:results[1]/ns1:e[1]/ns1:geometry[1]/ns1:location[1]/ns1:lat[1]}
+                                </content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:assertion type="XPath Match" name="Match content of [lng] in search response" id="386d2437-dbf2-4282-8fce-ce82c875cd11">
+                            <con:configuration>
+                                <path>declare namespace ns1='https://maps.googleapis.com/maps/api/place/details/json';
+                                    //ns1:Response[1]/ns1:result[1]/ns1:geometry[1]/ns1:location[1]/ns1:lng[1]/text()
+                                </path>
+                                <content>
+                                    ${GET - Nearby Search Sample#ResponseAsXml#declare namespace ns1='https://maps.googleapis.com/maps/api/place/nearbysearch/json'; //ns1:Response[1]/ns1:results[1]/ns1:e[1]/ns1:geometry[1]/ns1:location[1]/ns1:lng[1]}
+                                </content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="sensor" value="false"/>
+                            <con:entry key="reference" value="CoQBcgAAAB0KU4UfUSSM0TSM7Xst43CcuafxIOxUd6vejdLv2UJbxa0MCQjTKt9iEA2tu-K5_59WBw80CyYhDD3n-oo-sHCXn7PwQWfrCLIoN7gbXaZ-A9aULFvAMP9hPJaiTa0iD2b-ww4_bdXpyVpFS4xzGeYiu_m6pOUsKWxq_J_4utolEhDV8Uy4xeCumN5gHpMsKeZiGhS29n5jMUc06tjJBbqAjhNX2N74zQ"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:properties/>
+            <con:reportParameters/>
+            <con:breakPoints>
+                <con:testStepId>1290047c-1054-4661-92d3-69c5e1f80b1b</con:testStepId>
+                <con:status>NONE</con:status>
+                <con:properties/>
+            </con:breakPoints>
+        </con:testCase>

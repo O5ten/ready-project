@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:mockOperation name="GetCitiesByCountry" id="c85ed70e-588c-4386-8a20-29feaa3ccb04" interface="GlobalWeatherSoap" operation="GetCitiesByCountry" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="c85ed70e-588c-4386-8a20-29feaa3ccb04fileName">GetCitiesByCountry</con:setting></con:settings><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchConfig/><con:response name="Response 1" id="eaf548d7-3866-42be-ac45-fc499aa0624a" httpResponseStatus="200" encoding="UTF-8" dataSource=""><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetCitiesByCountryResponse>
+         <!--Optional:-->
+         <web:GetCitiesByCountryResult>?</web:GetCitiesByCountryResult>
+      </web:GetCitiesByCountryResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GetCitiesByCountry"/></con:response></con:mockOperation>

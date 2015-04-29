@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="queryautocomplete Tests" searchProperties="true" id="5c47ff0c-4f1d-42f1-8033-cbca010456dd" xmlns:con="http://eviware.com/soapui/config">
+            <con:description>Performes autocomplete requests for a query string with a specified text and bounding
+                coordinates, validates that the expected number of possible options is returned. The second request also
+                specifies french as language.
+
+                see https://developers.google.com/places/documentation/query
+            </con:description>
+            <con:settings><con:setting id="5c47ff0c-4f1d-42f1-8033-cbca010456ddfileName">queryautocomplete-Tests</con:setting></con:settings>
+            <con:testStep type="restrequest" name="GET - Sample Request" id="778e53de-8985-4121-bbff-c777db1bc1e6">
+                <con:settings/>
+                <con:config service="Places API" resourcePath="/maps/api/place/queryautocomplete/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Sample Request" mediaType="application/xml" id="07945062-176f-46be-bf6f-ccf14e1814c0">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>https://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Check count of [e]" id="3a6f62de-3773-40b9-96c3-2e00da9768ef">
+                            <con:configuration>
+                                <path>declare namespace
+                                    ns1='https://maps.googleapis.com/maps/api/place/queryautocomplete/json';
+                                    count( //ns1:Response/ns1:predictions/ns1:e)
+                                </path>
+                                <content>5</content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <entry key="input" value="Pizza near Par" xmlns="http://eviware.com/soapui/config"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:testStep type="restrequest" name="GET - Sample Request in French" id="db525d87-68a8-4e9c-bd85-aab3cd933dc4">
+                <con:settings/>
+                <con:config service="Places API" resourcePath="/maps/api/place/queryautocomplete/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Sample Request in French" mediaType="application/xml" id="1b6d6702-adaf-4bfd-82e3-a286a1b8e832">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>https://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Check count of [e]" id="1ec48395-5e64-41b4-83ef-e72be9c4a6f7">
+                            <con:configuration>
+                                <path>declare namespace
+                                    ns1='https://maps.googleapis.com/maps/api/place/queryautocomplete/json';
+                                    count( //ns1:Response/ns1:predictions/ns1:e)
+                                </path>
+                                <content>5</content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="input" value="Pizza near Par"/>
+                            <con:entry key="language" value="fr"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:properties/>
+            <con:reportParameters/>
+        </con:testCase>

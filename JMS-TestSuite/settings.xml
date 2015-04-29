@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="dedd696c-1042-45b1-964d-1271eec83d80" name="JMS TestSuite" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="dedd696c-1042-45b1-964d-1271eec83d80fileName">JMS-TestSuite</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Simple Tests" searchProperties="true" id="a268648f-bcfa-4147-af49-77a38fcae8f5" xmlns:con="http://eviware.com/soapui/config">
+            <con:description>Elevation API samples:
+                - First request validates that the response elevation for a specified location is correct
+                - Second request specifies multiple locations and validates that the corresponding response elevations
+                are correct
+                - Third request specifies a path fo locations and validates the response elevations.
+
+                see https://developers.google.com/maps/documentation/elevation/
+            </con:description>
+            <con:settings><con:setting id="a268648f-bcfa-4147-af49-77a38fcae8f5fileName">Simple-Tests</con:setting></con:settings>
+            <con:testStep type="restrequest" name="GET - Sample Request" id="3e19ff83-a0b2-4be3-ba04-6efe32a55eda">
+                <con:settings/>
+                <con:config service="Elevation API" resourcePath="/maps/api/elevation/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Sample Request" mediaType="application/xml" id="ed687655-9d44-4401-9c08-a56f2c0f52c1">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Match content of [results]" id="188ce73c-a778-4424-8f13-b088fa08c607">
+                            <con:configuration>
+                                <path>declare namespace ns1='http://maps.googleapis.com/maps/api/elevation/json';
+                                    //ns1:Response[1]/ns1:results[1]
+                                </path>
+                                <content><![CDATA[<results xmlns="http://maps.googleapis.com/maps/api/elevation/json">
+  <e>
+    <elevation>1608.637939453125</elevation>
+    <location>
+      <lat>39.7391536</lat>
+      <lng>-104.9847034</lng>
+    </location>
+    <resolution>4.771975994110107</resolution>
+  </e>
+</results>]]></content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="sensor" value="false"/>
+                            <con:entry key="locations" value="39.7391536,-104.9847034"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:testStep type="restrequest" name="GET - Sample Request - Multiple Responses" id="bc68d444-3b53-4524-a71f-4ec8560977e1">
+                <con:settings/>
+                <con:config service="Elevation API" resourcePath="/maps/api/elevation/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Sample Request - Multiple Responses" mediaType="application/xml" id="cb81b950-e12b-4024-aae1-f7b5f1ad3d75">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Match content of [results]" id="50dbfb3a-87d4-46f1-a3a7-d25f588cabe3">
+                            <con:configuration>
+                                <path>declare namespace ns1='http://maps.googleapis.com/maps/api/elevation/json';
+                                    //ns1:Response[1]/ns1:results[1]
+                                </path>
+                                <content><![CDATA[<results xmlns="http://maps.googleapis.com/maps/api/elevation/json">
+  <e>
+    <elevation>1608.637939453125</elevation>
+    <location>
+      <lat>39.7391536</lat>
+      <lng>-104.9847034</lng>
+    </location>
+    <resolution>4.771975994110107</resolution>
+  </e>
+  <e>
+    <elevation>-50.78903579711914</elevation>
+    <location>
+      <lat>36.455556</lat>
+      <lng>-116.866667</lng>
+    </location>
+    <resolution>19.08790397644043</resolution>
+  </e>
+</results>]]></content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="sensor" value="false"/>
+                            <con:entry key="locations" value="39.7391536,-104.9847034|36.455556,-116.866667"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:testStep type="restrequest" name="GET - Path Elevation Sample" id="ffb4ff0b-1962-4749-81cb-a0dbd32dd8fe">
+                <con:settings/>
+                <con:config service="Elevation API" resourcePath="/maps/api/elevation/{format}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:restRequest name="GET - Path Elevation Sample" mediaType="application/xml" id="7747a003-fbb4-4874-baa7-cd3b6fae380f">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://maps.googleapis.com</con:endpoint>
+                        <con:request/>
+                        <con:assertion type="XPath Match" name="Match content of [results]" id="4040c6b5-d9ec-4b9b-90a6-31d4fee0477c">
+                            <con:configuration>
+                                <path>declare namespace ns1='http://maps.googleapis.com/maps/api/elevation/json';
+                                    //ns1:Response[1]/ns1:results[1]
+                                </path>
+                                <content><![CDATA[<results xmlns="http://maps.googleapis.com/maps/api/elevation/json">
+  <e>
+    <elevation>4411.94189453125</elevation>
+    <location>
+      <lat>36.578581</lat>
+      <lng>-118.291994</lng>
+    </location>
+    <resolution>19.08790397644043</resolution>
+  </e>
+  <e>
+    <elevation>1381.861694335938</elevation>
+    <location>
+      <lat>36.41150289067028</lat>
+      <lng>-117.5602607523847</lng>
+    </location>
+    <resolution>19.08790397644043</resolution>
+  </e>
+  <e>
+    <elevation>-84.61699676513672</elevation>
+    <location>
+      <lat>36.23998</lat>
+      <lng>-116.83171</lng>
+    </location>
+    <resolution>19.08790397644043</resolution>
+  </e>
+</results>]]></content>
+                                <allowWildcards>false</allowWildcards>
+                                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                                <ignoreComments>false</ignoreComments>
+                            </con:configuration>
+                        </con:assertion>
+                        <con:credentials>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <con:entry key="sensor" value="false"/>
+                            <con:entry key="path" value="36.578581,-118.291994|36.23998,-116.83171"/>
+                            <con:entry key="samples" value="3"/>
+                        </con:parameters>
+                    </con:restRequest>
+                </con:config>
+            </con:testStep>
+            <con:properties/>
+            <con:reportParameters/>
+        </con:testCase>
